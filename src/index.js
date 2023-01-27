@@ -3,20 +3,20 @@ import Notiflix from 'notiflix';
 import fetchCountries  from './fetchCountries.js'
 
 
-const _ = require('lodash.debounce');
+import debounce from 'lodash.debounce';
 const DEBOUNCE_DELAY = 300;
 
 const searchBox = document.getElementById('search-box');
 const countryList = document.querySelector(".country-list");
 const countryInfo = document.querySelector('.country-info');
 
-searchBox.addEventListener('input', onInput);
+searchBox.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 
 // Получаем данные введенные в инпут и очищаем карточку после удаления
 
 function onInput(e) {
-  let  inputValue = e.currentTarget.value.trim();
+  let  inputValue = e.target.value.trim();
 if (!inputValue) {
   resetCard(countryList);
   resetCard(countryInfo);
@@ -63,7 +63,7 @@ return countries.map(
 
   ({ name, flags }) => 
   `<li class = list> 
-  <img class = img src = "${flags.svg}" alt = "${name.official}">
+  <img class = img_list src = "${flags.svg}" alt = "${name.official}" >
   ${name.official}
   
   </li>`
